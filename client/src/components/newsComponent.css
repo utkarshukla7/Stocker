@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;1,400&family=Poppins:wght@300;400&display=swap');
+
+.content {
+    display: flex;
+    /* position: relative; */
+}
+
+.left-container {
+    width: 60%;
+    padding: 0%;
+}
+
+.right-container {
+    width: 40%;
+    padding: 0%;
+}
+
+.news-list {
+
+    /* margin-right: 2%; */
+    /* padding-bottom: 100%; */
+    margin-top: 7%;
+    width: 90% !important;
+    background-color: white;
+}
+
+.news-item {
+    display: flex !important;
+    height: 112px !important;
+    background-color: rgb(238, 238, 238);
+}
+
+.news-info {
+    font-family: 'Open Sans', sans-serif;
+    flex: 7.5;
+    font-weight: 500 !important;
+    color: black;
+}
+
+.news-link {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 500 !important;
+    color: black;
+}
+
+.hover-link {
+    text-decoration: none;
+    transition: all 0s ease-in-out;
+}
+
+.hover-link:hover {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.image-div {
+    flex: 2.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.news-image {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 10px;
+}

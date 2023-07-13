@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+
+
+.footer {
+    font-family: "roboto", "sans-serif";
+    background: rgb(34, 40, 49) !important;
+}
+
+.navbar {
+    font-family: 'Poppins', sans-serif;
+    line-height: 26px;
+    background: rgb(34, 40, 49) !important;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-family: "roboto", "sans-serif";
+    letter-spacing: 3px;
+    color: white;
+    padding-left: 2%;
+}
+
+.form-control {
+    width: 370px;
+
+}
+
+.search-form {
+    width: auto;
+    padding-left: 26%;
+}
+
+.navbar-nav {
+    margin-left: 25%;
+}
+
+
+.nav-link {
+    font-weight: 300 !important;
+    color: white;
+}
+
+.nav-link:hover {
+    font-weight: 500 !important;
+    color: white;
+}
+
+.search-btn {
+    color: white
+}
+
+
+
+.active {
+    border-bottom: 1px solid white;
+    color: white !important;
+}
