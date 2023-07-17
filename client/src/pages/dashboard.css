@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;1,400&family=Poppins:wght@300;400&display=swap');
+
+.container-dash {
+    display: flex;
+}
+
+.left-container-dash {
+    width: 70%;
+}
+
+.right-container-dash {
+    width: 30%;
+}
+
+.selection-buttons {
+    margin-top: 3%;
+    margin-left: 5%;
+    justify-content: center;
+    width: 90%;
+    display: flex;
+    height: 40px;
+    border-radius: 10px;
+}
+
+.btn-1 {
+    flex: 1;
+    border: none;
+    background-color: rgb(233, 149, 93);
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-top-left-radius: 10px;
+}
+
+.btn-2 {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 10px !important;
+
+}
+
+.btn-1.selected {
+    background-color: rgb(253, 112, 20);
+    font-weight: bold;
+}
+
+.data-container {
+    margin-top: 1%;
+
+    width: 100%;
+}
+
+.item {
+    list-style-type: none;
+    cursor: pointer;
+}
+
+.item-div {
+    margin-left: 2.4%;
+    display: flex;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    width: 92%;
+    margin-bottom: 1%;
+    height: 45px;
+    background-color: whitesmoke;
+}
+
+.section1-dash {
+    padding-top: 1%;
+    padding-left: 1%;
+    width: 50%;
+    font-size: large;
+    justify-content: center;
+}
+
+.section2-dash {
+    padding-top: 1%;
+    font-family: 'Poppins', sans-serif;
+    justify-content: center;
+    color: rgb(57, 62, 70);
+    font-size: large;
+    width: 20%;
+}
+
+.section3-dash {
+    padding-top: 1%;
+    font-family: 'Poppins', sans-serif;
+    justify-content: center;
+    color: rgb(57, 62, 70);
+    font-size: large;
+    width: 15%;
+}
+
+.section4-dash {
+    padding-top: 1%;
+    padding-left: 1%;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    color: rgb(57, 62, 70);
+    font-size: large;
+    width: 15%;
+}
+
+.empty-container {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    width: 90%;
+    margin-left: 5%;
+    height: 400px;
+    justify-content: center;
+}
+
+.empty-declaration {
+    padding-left: 38%;
+    padding-top: 17%;
+    font-family: 'Poppins', sans-serif;
+    color: rgb(57, 62, 70);
+    font-size: large;
+}
+
+.portfolio-list {
+    width: 95% !important;
+    padding-left: 5%;
+}

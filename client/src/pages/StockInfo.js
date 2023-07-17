@@ -23,13 +23,52 @@ const StockInfo = () => {
     })
     const [auth, setAuth] = useAuth();
     const [showPopup, setShowPopup] = useState(false);
-    const [stocknumber, setNumberOfStocks] = useState('');
-    const [stockprice, setPrice] = useState('');
+    const [stocknumber, setNumberOfStocks] = useState(0);
+    const [stockprice, setPrice] = useState(0.0);
     const [datebought, setDateBought] = useState('');
-    const location = useLocation();
 
 
-    // console.log("hello")
+    const computePrice = (date) => {
+        setDateBought(date);
+        // console.log("oi")
+        if (graphdata) {
+
+            for (var i of graphdata) {
+                const dateString1 = i.time
+                // console.log(dateString1)
+                var dateParts1 = []
+                if (typeof dateString1 === String) {
+                    dateParts1 = dateString1.split('-');
+                }
+                else {
+                    dateParts1 = [dateString1.year, dateString1.month, dateString1.day]
+                }
+                // console.log(dateParts1)
+                const year1 = parseInt(dateParts1[0]);
+                const month1 = parseInt(dateParts1[1]) - 1;
+                const day1 = parseInt(dateParts1[2]);
+
+                const dateString2 = date
+                const dateParts2 = dateString2.split('-');
+                const year2 = parseInt(dateParts2[0]);
+                const month2 = parseInt(dateParts2[1]) - 1;
+                const day2 = parseInt(dateParts2[2]);
+                const date1 = new Date(year1, month1, day1)
+                const date2 = new Date(year2, month2, day2)
+
+                if (date1 > date2) {
+                    setPrice((i.open * stocknumber).toFixed(2))
+                    break;
+                }
+                else if (date1 === date2) {
+                    setPrice((i.open * stocknumber).toFixed(2))
+                    break;
+                }
+            }
+        }
+    }
+
+
     const handleAddClick = async () => {
         if (auth.user) {
             setShowPopup(true);
@@ -38,15 +77,21 @@ const StockInfo = () => {
             toast.error("Please login first!")
         }
     }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('Submitted:', stocknumber, stockprice, typeof datebought);
-        setNumberOfStocks('');
-        setPrice('');
+        setNumberOfStocks(0);
+        setPrice(0.0);
         setDateBought('');
         setShowPopup(false);
         try {
-            const res = await axios.post('http://localhost:8000/api/v1/companydata', { companyID: generalinfo._id, email: auth.user.email, saveType: 2, stocknumber, stockprice, datebought });
+            const stockdata = {
+                stockNumber: stocknumber,
+                stockPrice: stockprice,
+                dateBought: datebought
+            }
+            const res = await axios.post('http://localhost:8000/api/v1/companydata', { companyName: generalinfo.name, companySymbol: generalinfo.symbol, companyExchange: generalinfo.exchange, email: auth.user.email, saveType: 2, stockdata });
             // console.log(res.data)
             if (res.data.success) {
                 toast.success("Stock added successfuly!");
@@ -64,7 +109,7 @@ const StockInfo = () => {
     const handleFollowClick = async () => {
         if (auth.user) {
             try {
-                const res = await axios.post('http://localhost:8000/api/v1/companydata', { companyID: generalinfo._id, email: auth.user.email, saveType: 1 });
+                const res = await axios.post('http://localhost:8000/api/v1/companydata', { companyName: generalinfo.name, companySymbol: generalinfo.symbol, companyExchange: generalinfo.exchange, email: auth.user.email, saveType: 1 });
                 // console.log(res.data)
                 if (res.data.success) {
                     toast.success("Company added successfuly!");
@@ -134,29 +179,35 @@ const StockInfo = () => {
                     <div className="popup">
                         <div className="popup-content">
                             <h2>Add stocks</h2>
-                            <form onSubmit={handleSubmit}>
-                                <label>
-                                    Number of Stocks:
+                            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+                                <label style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <span>Number of Stocks:</span>
                                     <input
                                         type="number"
                                         value={stocknumber}
                                         onChange={(e) => setNumberOfStocks(e.target.value)}
+                                        required
+                                        style={{ marginLeft: 'auto' }}
                                     />
                                 </label>
-                                <label>
-                                    Price:
+                                <label style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <span>Date Bought:</span>
+                                    <input
+                                        type="date"
+                                        value={datebought}
+                                        onChange={(e) => { computePrice(e.target.value) }}
+                                        required
+                                        style={{ marginLeft: 'auto' }}
+                                    />
+                                </label>
+                                <label style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <span>Price:</span>
                                     <input
                                         type="number"
                                         value={stockprice}
                                         onChange={(e) => setPrice(e.target.value)}
-                                    />
-                                </label>
-                                <label>
-                                    Date Bought:
-                                    <input
-                                        type="date"
-                                        value={datebought}
-                                        onChange={(e) => setDateBought(e.target.value)}
+                                        readOnly
+                                        style={{ marginLeft: 'auto' }}
                                     />
                                 </label>
                                 <button type="submit">Submit</button>

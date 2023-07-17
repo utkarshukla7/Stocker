@@ -49,21 +49,33 @@ export const infoController = async (req, res) => {
 export const followController = async (req, res) => {
     try {
         const req_body = req.body;
-
+        // console.log(req_body)
         if (req_body.saveType == 1) {
-            const { companyID, email, saveType } = req_body;
-            const existingUser = await userCompaniesModel.findOne({ companyID, email, saveType });
+            const { companyName, companySymbol, companyExchange, email, saveType } = req_body;
+            const existingUser = await userCompaniesModel.findOne({ companyName, companySymbol, companyExchange, email, saveType });
+
             if (existingUser) {
                 return res.status(200).send({
                     success: false,
                     message: 'You are already following this stock !'
                 });
             }
-            const entry = await new userCompaniesModel({ companyID, email, saveType }).save();
+            // console.log({ companyName, companySymbol, companyExchange, email, saveType })
+            const entry = await new userCompaniesModel({ companyName, companySymbol, companyExchange, email, saveType }).save();
         }
         else {
-            const { companyID, email, saveType, stocknumber, stockprice, datebought } = req_body;
-            const entry = await new userCompaniesModel({ companyID, email, saveType, stockNumber: stocknumber, stockPrice: stockprice, dateBought: datebought }).save();
+            const { companyName, companySymbol, companyExchange, email, saveType, stockdata } = req_body;
+            const existingUser = await userCompaniesModel.findOne({ companyName, companySymbol, companyExchange, email, saveType });
+
+            if (existingUser) {
+                existingUser.stockdata.push(stockdata);
+                await existingUser.save();
+                return res.status(200).send({
+                    success: true,
+                    message: 'Stock data updated successfully.'
+                });
+            }
+            const entry = await new userCompaniesModel({ companyName, companySymbol, companyExchange, email, saveType, stockdata }).save();
         }
         // console.log("oi")
         res.status(201).send({
@@ -72,7 +84,8 @@ export const followController = async (req, res) => {
         })
     }
     catch (error) {
-        res.status(404).send({
+        res.status(500).send({
+            error,
             success: false,
             message: 'something went wrong!'
         })

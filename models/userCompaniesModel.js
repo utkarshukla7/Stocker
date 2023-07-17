@@ -2,7 +2,17 @@ import mongoose from "mongoose";
 
 const userCompanySchema = new mongoose.Schema(
     {
-        companyID: {
+        companyName: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        companySymbol: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        companyExchange: {
             type: String,
             required: true,
             trim: true
@@ -16,15 +26,20 @@ const userCompanySchema = new mongoose.Schema(
             type: Number,
             required: true
         },
-        stockNumber: {
-            type: Number
-        },
-        stockPrice: {
-            type: Number
-        },
-        dateBought: {
-            type: String,
-        }
+        stockdata: [
+            {
+                stockNumber: {
+                    type: Number
+                },
+                stockPrice: {
+                    type: Number
+                },
+                dateBought: {
+                    type: String,
+                }
+            }
+        ]
+
     },
     { timestamps: true }
 );
