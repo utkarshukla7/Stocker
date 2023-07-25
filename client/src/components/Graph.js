@@ -1,63 +1,89 @@
-import { createChart, ColorType } from 'lightweight-charts';
-import React, { useEffect, useRef, useState } from 'react';
+import {
+  createChart,
+  ColorType,
+  CrosshairMode,
+  LineStyle,
+} from "lightweight-charts";
+import React, { useEffect, useRef, useState } from "react";
 
-const Graph = props => {
-    const [final, setFinal] = useState([]);
-    let {
-        data,
-        colors: {
-            backgroundColor = 'black',
-            lineColor = '#2962FF',
-            textColor = 'white',
-            areaTopColor = '#2962FF',
-            areaBottomColor = 'rgba(41, 98, 255, 0.28)',
-        } = {},
-    } = props;
-    const chartContainerRef = useRef();
-    let temp = [];
-    for (let i in data) {
-        temp.push({
-            time: data[i]._internal_originalTime,
-            value: data[i].value
-        })
-    }
-    console.log(data)
-    useEffect(
-        () => {
+const Graph = (props) => {
+  const [final, setFinal] = useState([]);
+  const data = props.data;
+  const backgroundColor = props.colors?.backgroundColor || "black";
+  const lineColor = props.colors?.lineColor || "rgb(84, 180, 53)";
+  const textColor = props.colors?.textColor || "white";
+  const areaTopColor = props.colors?.areaTopColor || "rgb(84, 180, 53)";
+  const areaBottomColor =
+    props.colors?.areaBottomColor || "rgba(84, 180, 53, 0.28)";
+  const [counter, setCounter] = useState(0);
+  const chartContainerRef = useRef();
+  console.log(data);
 
-            const handleResize = () => {
-                chart.applyOptions({ width: chartContainerRef.current.clientWidth });
-            };
-
-            const chart = createChart(chartContainerRef.current, {
-                layout: {
-                    background: { type: ColorType.Solid, color: backgroundColor },
-                    textColor,
-                },
-                width: chartContainerRef.current.clientWidth,
-                height: 300,
-            });
-            chart.timeScale().fitContent();
-
-            const newSeries = chart.addAreaSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor });
-            newSeries.setData(data);
-
-            window.addEventListener('resize', handleResize);
-
-            return () => {
-                window.removeEventListener('resize', handleResize);
-
-                chart.remove();
-            };
+  const createChartInstance = () => {
+    const chart = createChart(chartContainerRef?.current, {
+      layout: {
+        background: { color: "white" },
+        textColor: "rgb(57, 62, 70)",
+      },
+      grid: {
+        vertLines: { color: "transparent" }, // Remove vertical grid lines
+        horzLines: { color: "#C3BCDB44" }, // Remove horizontal grid lines
+      },
+      width: 550,
+      height: 300,
+    });
+    chart.timeScale().fitContent();
+    chart.timeScale().applyOptions({
+      borderColor: "grey",
+    });
+    chart.applyOptions({
+      crosshair: {
+        vertLine: {
+          width: 8,
+          color: "#C3BCDB44",
+          style: LineStyle.Solid,
+          labelBackgroundColor: "rgb(57, 62, 70)",
         },
-        []
-    );
+        horzLine: {
+          color: "rgb(57, 62, 70)",
+          labelBackgroundColor: "rgb(57, 62, 70)",
+        },
+      },
+    });
+    const newSeries = chart.addAreaSeries({
+      lineColor,
+      topColor: areaTopColor,
+      bottomColor: areaBottomColor,
+    });
+    newSeries.priceScale().applyOptions({
+      position: "left",
+      autoScale: false, // disables auto scaling based on visible content
+      scaleMargins: {
+        top: 0.1,
+        bottom: 0.2,
+      },
+      borderColor: "white",
+    });
+    newSeries.setData(data);
 
-    return (
-        <div
-            ref={chartContainerRef}
-        />
-    );
+    const handleResize = () => {
+      chart.applyOptions({
+        width: 550,
+      });
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      chart.remove();
+    };
+  };
+  useEffect(() => {
+    console.log();
+    createChartInstance();
+  }, []);
+
+  return <div ref={chartContainerRef} />;
 };
 
-export default Graph
+export default Graph;
