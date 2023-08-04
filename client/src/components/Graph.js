@@ -29,8 +29,8 @@ const Graph = (props) => {
         vertLines: { color: "transparent" }, // Remove vertical grid lines
         horzLines: { color: "#C3BCDB44" }, // Remove horizontal grid lines
       },
-      width: 550,
-      height: 300,
+      width: props.width ? props.width : 550,
+      height: props.height ? props.height : 300,
     });
     chart.timeScale().fitContent();
     chart.timeScale().applyOptions({
@@ -39,8 +39,8 @@ const Graph = (props) => {
     chart.applyOptions({
       crosshair: {
         vertLine: {
-          width: 8,
-          color: "#C3BCDB44",
+          width: 1,
+          color: "rgb(57, 62, 70)",
           style: LineStyle.Solid,
           labelBackgroundColor: "rgb(57, 62, 70)",
         },
@@ -68,7 +68,8 @@ const Graph = (props) => {
 
     const handleResize = () => {
       chart.applyOptions({
-        width: 550,
+        width: props.width ? props.width : 550,
+        height: props.height ? props.height : 300,
       });
     };
     window.addEventListener("resize", handleResize);

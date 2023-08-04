@@ -19,7 +19,7 @@
 
     /* margin-right: 2%; */
     /* padding-bottom: 100%; */
-    margin-top: 19%;
+    margin-top: 23%;
     width: 90% !important;
     background-color: white;
 }
@@ -27,7 +27,7 @@
 .news-item {
     display: flex !important;
     height: 112px !important;
-    background-color: rgb(238, 238, 238);
+    background-color: rgb(246, 242, 242);
 }
 
 .news-info {

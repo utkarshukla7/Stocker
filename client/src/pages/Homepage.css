@@ -1,0 +1,26 @@
+.top-button{
+    position: absolute;
+    display: flex;
+    top: 15vh;
+}
+
+.index-btn{
+    margin-left: 4.6vw;
+    height: 10vh;
+    width: 10vw;
+    padding: 0%;
+    background-color: gainsboro;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding-left: 1vw;
+    padding-top: 1.2vh;
+    font-weight: 600;
+}
+
+.home-graph{
+    top: 37vh;
+    left: 5vw;
+    position: absolute;
+    height: 50vh;
+}
